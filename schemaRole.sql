@@ -3,7 +3,7 @@ CREATE DATABASE role_db;
 
 USE role_db;
 
-CREATE TABLE role (
+CREATE TABLE roles (
   id INT PRIMARY KEY,
   title VARCHAR(30),
   salary DECIMAL,
