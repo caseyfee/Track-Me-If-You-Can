@@ -1,5 +1,6 @@
 const inquirer = require("inquirer");
 const db = require("./db");
+const queries = require("queries");
 
 async function addNewRole(){
 

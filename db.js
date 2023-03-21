@@ -1,21 +1,23 @@
+const express = require('express');
 const mysql = require('mysql2');
 require('dotenv').config();
-require('console.table')
+require('console.table');
+
 
 // Connect to database
 const db = mysql.createConnection(
     {
         host: 'localhost',
         // MySQL username,
-        user: 'root',
+        user: process.env.DB_USERNAME,
         // MySQL password in other document
         password: process.env.DB_PASSWORD,
-        database: 'ArtHouse_db'
+        database: process.env.DB
     },
     console.log(`Connected to the ArtHouse_db database.`)
 );
 
-const quieres = {
+const queries = {
     getAllDept: async function () {
         try {
             const [rows] = await db.promise().query("SELECT * FROM department");
@@ -28,4 +30,4 @@ const quieres = {
 
 
 
-module.exports = quieres
+module.exports = queries
