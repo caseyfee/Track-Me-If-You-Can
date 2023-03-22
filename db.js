@@ -46,9 +46,9 @@ const queries = {
         }
     },
 
-    updateEmployees: async function () {
+    updateRole: async function () {
         try {
-            // is promise().post a real thing?
+            // is promise().post a real thing? this needs to be updated 
             const [rows] = await db.promise().post("SELECT * FROM employees");
             return rows
         } catch (err) {
