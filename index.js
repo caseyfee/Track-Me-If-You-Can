@@ -1,11 +1,8 @@
 const inquirer = require("inquirer");
+const { updateRole } = require("./db");
 const db = require("./db");
-const queries = require("queries");
 
-async function addNewRole(){
-
-     depts = await db.getAllDept();
-
+async function companySearch(){
 
 
     inquirer.prompt(
@@ -19,26 +16,26 @@ async function addNewRole(){
         ]
         )
 
-        .then(() => {
-            // const {shape, text, textColor, bgColor} = data;
-            
-            var newChoice;
-            
+        .then((data) => {
+            const {choice} = data;
+                        
             switch (choice){
                 case "View all departments?":
-                    newChoice = new getAllDept();
+                    // newChoice = new getAllDept();
+                    db.getAllDept();
                     break;
                 case "View all roles?":
-                    newChoice = new getAllRoles();
+                    db.getAllRoles();
                     break;
                 case "View all employees?":
-                    newChoice = new getAllEmployees();
+                    db.getAllEmployees();
                     break;
                 case "Update a role?":
-                    updateRole = new Square(bgColor, textColor, text);
+                    db.updateRole();
                     break;
             }
         }
         )
             
 }
+companySearch();

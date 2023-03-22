@@ -22,6 +22,7 @@ const queries = {
     getAllDept: async function () {
         try {
             const [rows] = await db.promise().query("SELECT * FROM department");
+            console.log(rows);
             return rows
         } catch (err) {
             console.error(err)
@@ -31,6 +32,7 @@ const queries = {
     getAllRoles: async function () {
         try {
             const [rows] = await db.promise().query("SELECT * FROM roles");
+            console.log(rows);
             return rows
         } catch (err) {
             console.error(err)
@@ -40,6 +42,7 @@ const queries = {
     getAllEmployees: async function () {
         try {
             const [rows] = await db.promise().query("SELECT * FROM employees");
+            console.log(rows);
             return rows
         } catch (err) {
             console.error(err)
@@ -50,6 +53,7 @@ const queries = {
         try {
             // is promise().post a real thing? this needs to be updated 
             const [rows] = await db.promise().post("SELECT * FROM employees");
+            console.log(rows);
             return rows
         } catch (err) {
             console.error(err)
@@ -60,3 +64,9 @@ const queries = {
 
 
 module.exports = queries
+// module.exports = {
+//     getAllDept,
+//     getAllRoles,
+//     getAllEmployees,
+//     updateRole,
+// }
