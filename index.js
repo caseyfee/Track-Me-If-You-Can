@@ -13,12 +13,6 @@ async function companySearch(){
                 message: "What would you like to do?",
                 choices: ['View all departments?', 'View all roles?', 'View all employees?', 'Update a role?'],
             },
-            {
-                type:"list",
-                name: "continue",
-                message: "What would you like to search/do something else?",
-                choices: ['Yes', 'No', ],
-            }
         ]
         )
 
@@ -29,25 +23,19 @@ async function companySearch(){
                 case "View all departments?":
                     // newChoice = new getAllDept();
                     db.getAllDept();
-                    inquirer.prompt(
-                        [
-                            {
-                                type:"list",
-                                name: "continue",
-                                message: "What would you like to search/do something else?",
-                                choices: ['Yes', 'No'],
-                            }
-                        ]
-                        )
+                    companySearch();
                     break;
                 case "View all roles?":
                     db.getAllRoles();
+                    companySearch();
                     break;
                 case "View all employees?":
                     db.getAllEmployees();
+                    companySearch();
                     break;
                 case "Update a role?":
                     db.updateRole();
+                    companySearch();
                     break;
             }
         }

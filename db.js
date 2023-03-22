@@ -8,7 +8,7 @@ require('console.table');
 const db = mysql.createConnection(
     {
         host: 'localhost',
-        // MySQL username,
+        // MySQL username is in the other document,
         user: process.env.DB_USERNAME,
         // MySQL password in other document
         password: process.env.DB_PASSWORD,
