@@ -37,7 +37,7 @@ const queries = {
         } catch (err) {
             console.error(err)
         }
-    }, 
+    },
 
     getAllEmployees: async function () {
         try {
@@ -52,13 +52,59 @@ const queries = {
     updateRole: async function () {
         try {
             // is promise().post a real thing? this needs to be updated 
+            const [rows] = await db.promise().post("UPDATE reviews SET review = ? WHERE id = ?");
+            const params = [req.body.review, req.params.id];
+            console.log(rows);
+            return rows
+        } catch (err) {
+            console.error(err)
+        }
+    },
+
+    addDept: async function () {
+        try {
+            // is promise().post a real thing? this needs to be updated 
+            const [rows] = await db.promise().post("INSERT INTO departments (dept_name) VALUES (?)");
+            
+            const params = [body.movie_name];
+
+            db.query(sql, params, (err, result) => {
+                if (err) {
+                    res.status(400).json({ error: err.message });
+                    return;
+                }
+                res.json({
+                    message: 'success',
+                    data: body
+                });
+            });
+            console.log(rows);
+            return rows
+        } catch (err) {
+            console.error(err)
+        }
+    },
+    addRole: async function () {
+        try {
+            // is promise().post a real thing? this needs to be updated 
             const [rows] = await db.promise().post("SELECT * FROM employees");
             console.log(rows);
             return rows
         } catch (err) {
             console.error(err)
         }
-    }
+    },
+
+    addEmployee: async function () {
+        try {
+            // is promise().post a real thing? this needs to be updated 
+            const [rows] = await db.promise().post("SELECT * FROM employees");
+            console.log(rows);
+            return rows
+        } catch (err) {
+            console.error(err)
+        }
+    },
 }
 
 

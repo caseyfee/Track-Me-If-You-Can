@@ -1,6 +1,8 @@
 const inquirer = require("inquirer");
 const { updateRole } = require("./db");
 const db = require("./db");
+require('console.table');
+
 
 async function companySearch(){
 
@@ -11,7 +13,7 @@ async function companySearch(){
                 type:"list",
                 name: "choice",
                 message: "What would you like to do?",
-                choices: ['View all departments?', 'View all roles?', 'View all employees?', 'Update a role?'],
+                choices: ['View all departments?', 'View all roles?', 'View all employees?', 'Update a role?', 'Add a Department?', 'Add a Role?', 'Add an Employee?'],
             },
         ]
         )
@@ -34,6 +36,18 @@ async function companySearch(){
                     companySearch();
                     break;
                 case "Update a role?":
+                    db.updateRole();
+                    companySearch();
+                    break;
+                case "Add a Department?":
+                    db.updateRole();
+                    companySearch();
+                    break;
+                case "Add a Role?":
+                    db.updateRole();
+                    companySearch();
+                    break;
+                case "Add an Employee?":
                     db.updateRole();
                     companySearch();
                     break;
