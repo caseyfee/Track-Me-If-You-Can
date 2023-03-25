@@ -13,7 +13,17 @@ async function userSearch(){
                 type:"list",
                 name: "choice",
                 message: "What would you like to do?",
-                choices: ['View all departments?', 'View all roles?', 'View all employees?', 'Update a role?', 'Add a Department?', 'Add a Role?', 'Add an Employee?'],
+                choices: [
+                'View all departments?', 
+                'View all roles?', 
+                'View all employees?', 
+                'Update a role?', 
+                'Add a Department?', 
+                'Add a Role?', 
+                'Add an Employee?',
+
+                
+                ],
             },
         ]
         )
@@ -25,31 +35,31 @@ async function userSearch(){
                 case "View all departments?":
                     // newChoice = new getAllDept();
                     db.getAllDept();
-                    companySearch();
+                    userSearch();
                     break;
                 case "View all roles?":
                     db.getAllRoles();
-                    companySearch();
+                    userSearch();
                     break;
                 case "View all employees?":
                     db.getAllEmployees();
-                    companySearch();
+                    userSearch();
                     break;
                 case "Update a role?":
                     db.updateRole();
-                    companySearch();
+                    userSearch();
                     break;
                 case "Add a Department?":
                     db.addDept();
-                    companySearch();
+                    userSearch();
                     break;
                 case "Add a Role?":
                     db.addRole();
-                    companySearch();
+                    userSearch();
                     break;
                 case "Add an Employee?":
                     db.updateEmployee();
-                    companySearch();
+                    userSearch();
                     break;
             }
         }
