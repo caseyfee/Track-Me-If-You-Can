@@ -51,11 +51,29 @@ const queries = {
 
     updateRole: async function () {
         try {
+            inquirer.prompt(
+                [
+                    {
+                        type:"input",
+                        name: "uRoleName",
+                        message: "What is the role's name?",
+                    },
+                    {
+                        type:"input",
+                        name: "uRoleSalary",
+                        message: "What is the role's salary?",
+                    },
+                    {
+                        type:"input",
+                        name: "uRoleDept",
+                        message: "What is the role's deptartment?",
+                    },
+                ])
             // is promise().post a real thing? this needs to be updated 
-            const [rows] = await db.promise().post("UPDATE reviews SET review = ? WHERE id = ?");
-            const params = [req.body.review, req.params.id];
-            console.log(rows);
-            return rows
+            // const [rows] = await db.promise().post("UPDATE reviews SET review = ? WHERE id = ?");
+            // const params = [req.body.review, req.params.id];
+            // console.log(rows);
+            // return rows
         } catch (err) {
             console.error(err)
         }
@@ -63,6 +81,14 @@ const queries = {
 
     addDept: async function () {
         try {
+            inquirer.prompt(
+                [
+                    {
+                        type:"input",
+                        name: "aDeptName",
+                        message: "What is the dept's name?",
+                    },
+                ])
             // is promise().post a real thing? this needs to be updated 
             const [rows] = await db.promise().post("INSERT INTO departments (dept_name) VALUES (?)");
             
@@ -86,6 +112,29 @@ const queries = {
     },
     addRole: async function () {
         try {
+            inquirer.prompt(
+                [
+                    {
+                        type:"input",
+                        name: "aRoleName",
+                        message: "What is the role's name (first and last)?",
+                    },
+                    {
+                        type:"input",
+                        name: "uRoleSalary",
+                        message: "What is the role's salary?",
+                    },
+                    {
+                        type:"input",
+                        name: "uRoleDept",
+                        message: "What is the role's deptartment?",
+                    },
+                    {
+                        type:"input",
+                        name: "uRoleManager",
+                        message: "Who is the role's manager?",
+                    },
+                ])
             // is promise().post a real thing? this needs to be updated 
             const [rows] = await db.promise().post("SELECT * FROM employees");
             console.log(rows);
@@ -95,8 +144,22 @@ const queries = {
         }
     },
 
-    addEmployee: async function () {
+    updateEmployee: async function () {
         try {
+            inquirer.prompt(
+                [
+                    {
+                        type:"list",
+                        name: "uEmployeeName",
+                        message: "What is the employee's name?",
+                        list: ["1", "2", "3"]
+                    },
+                    {
+                        type:"input",
+                        name: "uEmployeeRole",
+                        message: "What is this individual's new role?",
+                    },
+                ])
             // is promise().post a real thing? this needs to be updated 
             const [rows] = await db.promise().post("SELECT * FROM employees");
             console.log(rows);

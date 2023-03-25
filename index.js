@@ -4,7 +4,7 @@ const db = require("./db");
 require('console.table');
 
 
-async function companySearch(){
+async function userSearch(){
 
 
     inquirer.prompt(
@@ -40,15 +40,15 @@ async function companySearch(){
                     companySearch();
                     break;
                 case "Add a Department?":
-                    db.updateRole();
+                    db.addDept();
                     companySearch();
                     break;
                 case "Add a Role?":
-                    db.updateRole();
+                    db.addRole();
                     companySearch();
                     break;
                 case "Add an Employee?":
-                    db.updateRole();
+                    db.updateEmployee();
                     companySearch();
                     break;
             }
@@ -56,4 +56,4 @@ async function companySearch(){
         )
             
 }
-companySearch();
+userSearch();
