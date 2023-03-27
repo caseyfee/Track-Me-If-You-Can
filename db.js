@@ -155,13 +155,18 @@ const queries = {
                     },
                     {
                         type: "input",
+                        name: "role_id",
+                        message: "What is the new employee's role id?",
+                    },
+                    {
+                        type: "input",
                         name: "manager_id",
                         message: "What is the new employee's manager id?",
                     },
                 ])
                 
                    await db.promise().query(
-                        'INSERT INTO employees (first_name, last_name, manager_id) VALUES (?)', answers
+                        'INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?)', answers
                     )
             
             console.log("added employee");
