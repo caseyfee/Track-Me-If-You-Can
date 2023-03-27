@@ -173,10 +173,8 @@ const queries = {
                         name: "aEmployeeManagerid",
                         message: "What is the new employee's manager id?",
                     },
-                    
-                // THEN I am prompted to enter the employee’s first name, last name, 
-                // role, and manager, and that employee is added to the database
-                // const [input] = await db.promise().query("SELECT * FROM employees");
+                ])
+                
                    await db.promise().query(
                         'INSERT INTO employees SET ?',
                         {
@@ -185,8 +183,7 @@ const queries = {
                         },
                     )
             
-            console.log(answers);
-            return input
+            console.log("added employee");
         } catch (err) {
             console.error(err)
         }
