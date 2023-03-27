@@ -59,4 +59,4 @@ async function userSearch(){
 }
 userSearch();
 
-module.exports = userSearch
+module.exports = {userSearch}

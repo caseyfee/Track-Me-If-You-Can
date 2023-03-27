@@ -4,7 +4,8 @@ require('dotenv').config();
 require('console.table');
 const inquirer = require("inquirer");
 require('console.table');
-const index = require("./index");
+// const index = require("./index");
+// import { userSearch } from "./index";
 const userSearch = require('./index');
 
 
@@ -64,9 +65,9 @@ const queries = {
     return employee;
     },
 
-    updateRole: function () {
+    updateRole: async function () {
         try {
-            inquirer.prompt(
+            await inquirer.prompt(
                 [
                     {
                         type: "list",
@@ -111,7 +112,7 @@ const queries = {
 
     addDept: async function () {
          {
-            inquirer.prompt(
+            await inquirer.prompt(
                 [
                     {
                         type: "input",
@@ -129,11 +130,11 @@ const queries = {
                     db.query ('INSERT INTO department SET ?',
                     {
                       name: input.aDeptName,
-                      id: "005"
+                    //   id: "005"
                     },
                     function (err) { 
                         if(err) throw err;
-                        // ${input.aDeptName}
+                        // ${input.aDeptid}
                         console.log(`added department id: ${input.aDeptName} `);
                         // userSearch();
                      }
@@ -142,9 +143,9 @@ const queries = {
         }
         // userSearch();
     },
-    addRole: function () {
+    addRole: async function () {
         try {
-            inquirer.prompt(
+            await inquirer.prompt(
                 [
                     {
                         type: "input",
@@ -170,9 +171,9 @@ const queries = {
                 // is promise().post a real thing? this needs to be updated 
                 // const [input] = await db.promise().query("SELECT * FROM employees");
 
-                .then(function (input) {
+                .then(await function (input) {
                     db.promise().query(
-                        'INSERT INTO roles SET (?)',
+                        'INSERT INTO roles SET ?',
                         {
                             title: input.aRoleName,
                             salary: input.aRoleSalary,
@@ -187,7 +188,7 @@ const queries = {
         } catch (err) {
             console.error(err)
         }
-        userSearch();
+        // userSearch();
     },
 
     addEmployee: async function () {

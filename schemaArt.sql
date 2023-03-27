@@ -12,7 +12,8 @@ CREATE TABLE roles (
   id INT PRIMARY KEY AUTO_INCREMENT,
   title VARCHAR(30),
   salary DECIMAL,
-  department_id INT
+  department_id INT,
+  manager_id INT,
 );
 
 CREATE TABLE employees (
