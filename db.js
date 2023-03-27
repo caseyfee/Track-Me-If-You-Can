@@ -18,7 +18,7 @@ const db = mysql.createConnection(
         password: process.env.DB_PASSWORD,
         database: process.env.DB,
     },
-    console.log(`Connected to the ArtHouse_db database.`)
+    console.log(`Connected to the arthouse_db database.`)
 );
 
 
@@ -109,7 +109,7 @@ const queries = {
         userSearch();
     },
 
-    addDept:  function () {
+    addDept: async function () {
          {
             inquirer.prompt(
                 [
@@ -118,17 +118,24 @@ const queries = {
                         name: "aDeptName",
                         message: "What is the dept's name?",
                     },
+                    // {
+                    //     type: "input",
+                    //     name: "aDeptName",
+                    //     message: "What is the dept's id?",
+                    // },
                 ])
 
-                .then(function(input){
-                    db.promise().query ('INSERT INTO departments SET ?',
+                .then(await function(input){
+                    db.query ('INSERT INTO department SET ?',
                     {
-                      name: input.aDeptName
+                      name: input.aDeptName,
+                      id: "005"
                     },
                     function (err) { 
                         if(err) throw err;
-                        console.log(`added department ${input.aDeptName}`);
-                        userSearch();
+                        // ${input.aDeptName}
+                        console.log(`added department id: ${input.aDeptName} `);
+                        // userSearch();
                      }
                     )
                     });
