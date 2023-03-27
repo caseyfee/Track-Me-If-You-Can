@@ -5,6 +5,7 @@ require('console.table');
 const inquirer = require("inquirer");
 require('console.table');
 const index = require("./index");
+const userSearch = require('./index');
 
 
 // Connect to database
@@ -20,12 +21,7 @@ const db = mysql.createConnection(
     console.log(`Connected to the ArtHouse_db database.`)
 );
 
-// Function that will pull up employee list to add to it for the 
-const employeeList = async () => {
-    const departmentQuery = `SELECT id AS value, name FROM department;`;
-    const departments = await db.query(departmentQuery);
-    return departments[0];
-};
+
 
 const queries = {
     getAllDept: async function () {
@@ -61,44 +57,51 @@ const queries = {
         userSearch();
     },
 
+    // Function that will pull up employee list 
+    async employeeList() {
+    const employeeQuery = `SELECT id AS value, name FROM department;`;
+    const employee = await db.query(employeeQuery);
+    return employee;
+    },
+
     updateRole: function () {
         try {
             inquirer.prompt(
                 [
                     {
-                        type:"list",
+                        type: "list",
                         name: "uRoleName",
                         message: "What is the role's name?",
                         list: employeeList(),
-                            when(answers) {
-                                return answers.task === "What is the employee's first name?";
-                            }
+                        when(answers) {
+                            return answers.task === "What is the employee's first name?";
+                        }
                     },
                     {
-                        type:"input",
+                        type: "input",
                         name: "uRoleSalary",
                         message: "What is the role's salary?",
                     },
                     {
-                        type:"input",
+                        type: "input",
                         name: "uRoleDept",
                         message: "What is the department id?",
                     },
                 ])
-            // is promise().post a real thing? this needs to be updated 
-            // const [input] = await db.promise().post("UPDATE reviews SET review = ? WHERE id = ?");
-            // const params = [req.body.review, req.params.id];
-            // console.log(input);
-            // return input
-            .then(function (input) {
-                db.promise().query(
-                  'INSERT INTO roles SET ?',
-                  {
-                    title: input.uRoleName,
-                    salary: input.uRoleName,
-                    department_id: input.uRoleDept
-                  },
-                )
+                // is promise().post a real thing? this needs to be updated 
+                // const [input] = await db.promise().post("UPDATE reviews SET review = ? WHERE id = ?");
+                // const params = [req.body.review, req.params.id];
+                // console.log(input);
+                // return input
+                .then(function (input) {
+                    db.promise().query(
+                        'INSERT INTO roles SET ?',
+                        {
+                            title: input.uRoleName,
+                            salary: input.uRoleName,
+                            department_id: input.uRoleDept
+                        },
+                    )
                 })
         } catch (err) {
             console.error(err)
@@ -106,61 +109,70 @@ const queries = {
         userSearch();
     },
 
-    addDept: async function () {
-        try {
+    addDept:  function () {
+         {
             inquirer.prompt(
                 [
                     {
-                        type:"input",
+                        type: "input",
                         name: "aDeptName",
                         message: "What is the dept's name?",
                     },
                 ])
 
-                const [input] = await db.promise().query("INSERT INTO departments (name) VALUES (?)");
-            
-            const params = [body.aDeptName];
-
-            console.log(input);
-            return input
-        } catch (err) {
-            console.error(err)
+                .then(function(input){
+                    db.promise().query ('INSERT INTO departments SET ?',
+                    {
+                      name: input.aDeptName
+                    },
+                    function (err) { 
+                        if(err) throw err;
+                        console.log(`added department ${input.aDeptName}`);
+                        userSearch();
+                     }
+                    )
+                    });
         }
-        userSearch();
+        // userSearch();
     },
     addRole: function () {
         try {
             inquirer.prompt(
                 [
                     {
-                        type:"input",
+                        type: "input",
                         name: "aRoleName",
                         message: "What is the role's name?",
                     },
                     {
-                        type:"input",
+                        type: "input",
                         name: "aRoleSalary",
                         message: "What is the new role's salary?",
                     },
                     {
-                        type:"input",
+                        type: "input",
                         name: "aRoleDept",
                         message: "What is the new role's deptartment id?",
                     },
+                    {
+                        type: "input",
+                        name: "aRoleManager",
+                        message: "What is the new role's manager id?",
+                    },
                 ])
-            // is promise().post a real thing? this needs to be updated 
-            // const [input] = await db.promise().query("SELECT * FROM employees");
-            
-            .then(function (input) {
-                dbConnection.query(
-                  'INSERT INTO roles SET (?)',
-                  {
-                    title: input.aRoleName,
-                    salary: input.aRoleName,
-                    department_id: input.aRoleDept,
-                    manager_id: input.aRoleManager
-                  },
-                )
+                // is promise().post a real thing? this needs to be updated 
+                // const [input] = await db.promise().query("SELECT * FROM employees");
+
+                .then(function (input) {
+                    db.promise().query(
+                        'INSERT INTO roles SET (?)',
+                        {
+                            title: input.aRoleName,
+                            salary: input.aRoleSalary,
+                            department_id: input.aRoleDept,
+                            manager_id: input.aRoleManager
+                        },
+                    )
                 })
 
             console.log(input);
@@ -176,28 +188,28 @@ const queries = {
             inquirer.prompt(
                 [
                     {
-                        type:"list",
+                        type: "list",
                         name: "aEmployeeFName",
                         message: "What is the employee's first name?",
                     },
                     {
-                        type:"list",
+                        type: "list",
                         name: "aEmployeeLName",
                         message: "What is the employee's last name?",
                     },
                     {
-                        type:"input",
+                        type: "input",
                         name: "aEmployeeRole",
                         message: "What is this individual's new role?",
                     },
                     {
-                        type:"input",
+                        type: "input",
                         name: "aEmployeeManager",
                         message: "What is this individual's manager's id?",
                     },
                 ])
-                // THEN I am prompted to enter the employee’s first name, last name, 
-                // role, and manager, and that employee is added to the database
+            // THEN I am prompted to enter the employee’s first name, last name, 
+            // role, and manager, and that employee is added to the database
             const [input] = await db.promise().query("SELECT * FROM employees");
             console.log(input);
             return input
