@@ -41,7 +41,7 @@ async function userSearch(){
                     db.getAllEmployees();
                     break;
                 case "Update a role?":
-                    db.updateRole();
+                    db.updateEmployeeRole();
                     break;
                 case "Add a Department?":
                     db.addDept();

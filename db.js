@@ -33,7 +33,7 @@ const queries = {
         } catch (err) {
             console.error(err)
         }
-        userSearch();
+        // userSearch();
     },
 
     getAllRoles: async function () {
@@ -44,7 +44,7 @@ const queries = {
         } catch (err) {
             console.error(err)
         }
-        userSearch();
+        // userSearch();
     },
 
     getAllEmployees: async function () {
@@ -55,7 +55,7 @@ const queries = {
         } catch (err) {
             console.error(err)
         }
-        userSearch();
+        // userSearch();
     },
 
     // Function that will pull up employee list 
@@ -65,29 +65,26 @@ const queries = {
     return employee;
     },
 
-    updateRole: async function () {
+    updateEmployeeRole: async function () {
         try {
             await inquirer.prompt(
                 [
                     {
                         type: "list",
                         name: "uRoleName",
-                        message: "What is the role's name?",
-                        list: employeeList(),
-                        when(answers) {
-                            return answers.task === "What is the employee's first name?";
-                        }
+                        message: "Who needs a new role?",
+                        choices: this.getAllEmployees(),
                     },
                     {
                         type: "input",
-                        name: "uRoleSalary",
-                        message: "What is the role's salary?",
+                        name: "uRoleid",
+                        message: "What is their new role's id?",                        
                     },
-                    {
-                        type: "input",
-                        name: "uRoleDept",
-                        message: "What is the department id?",
-                    },
+                    // {
+                    //     type: "input",
+                    //     name: "uRoleDept",
+                    //     message: "What is the department id?",
+                    // },
                 ])
                 // is promise().post a real thing? this needs to be updated 
                 // const [input] = await db.promise().post("UPDATE reviews SET review = ? WHERE id = ?");
@@ -98,16 +95,16 @@ const queries = {
                     db.promise().query(
                         'INSERT INTO roles SET ?',
                         {
-                            title: input.uRoleName,
-                            salary: input.uRoleName,
-                            department_id: input.uRoleDept
+                            name: input.uRoleName,
+                            role_id: input.uRoleid,
+                            // department_id: input.uRoleDept
                         },
                     )
                 })
         } catch (err) {
             console.error(err)
         }
-        userSearch();
+        // userSearch();
     },
 
     addDept: async function () {
