@@ -195,25 +195,25 @@ const queries = {
             await inquirer.prompt(
                 [
                     {
-                        type: "list",
+                        type: "input",
                         name: "aEmployeeFName",
                         message: "What is the employee's first name?",
                     },
                     {
-                        type: "list",
+                        type: "input",
                         name: "aEmployeeLName",
                         message: "What is the employee's last name?",
                     },
                     {
                         type: "input",
-                        name: "aEmployeeRole",
-                        message: "What is this individual's new role?",
+                        name: "aEmployeeManagerid",
+                        message: "What is the new employee's manager id?",
                     },
-                    {
-                        type: "input",
-                        name: "aEmployeeManager",
-                        message: "What is this individual's manager's id?",
-                    },
+                    // {
+                    //     type: "input",
+                    //     name: "aEmployeeRoleid",
+                    //     message: "What is the new employee's role id?",
+                    // },
                 ])
             // THEN I am prompted to enter the employee’s first name, last name, 
             // role, and manager, and that employee is added to the database
@@ -224,7 +224,7 @@ const queries = {
                     {
                         first_name: input.aEmployeeFName,
                         last_name: input.aEmployeeLName,
-                        role_id: input.aEmployeeRole,
+                        // role_id: input.aEmployeeRole,
                         manager_id: input.aEmployeeManager
                     },
                 )
