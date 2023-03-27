@@ -1,62 +1,60 @@
 const inquirer = require("inquirer");
-const { updateRole } = require("./db");
-const db = require("./db");
+const db = require("./db.js");
 require('console.table');
 
 
-async function userSearch(){
+async function userSearch() {
 
 
-    inquirer.prompt(
+    const input = await inquirer.prompt(
         [
             {
-                type:"list",
+                type: "list",
                 name: "choice",
                 message: "What would you like to do?",
                 choices: [
-                'View all departments?', 
-                'View all roles?', 
-                'View all employees?', 
-                'Update a role?', 
-                'Add a Department?', 
-                'Add a Role?', 
-                'Add an Employee?',
+                    'View all departments?',
+                    'View all roles?',
+                    'View all employees?',
+                    'Update a role?',
+                    'Add a Department?',
+                    'Add a Role?',
+                    'Add an Employee?',
                 ],
             },
         ]
-        )
+    )
 
-        .then((data) => {
-            const {choice} = data;
-                        
-            switch (choice){
-                case "View all departments?":
-                    // newChoice = new getAllDept();
-                    db.getAllDept();
-                    break;
-                case "View all roles?":
-                    db.getAllRoles();
-                    break;
-                case "View all employees?":
-                    db.getAllEmployees();
-                    break;
-                case "Update a role?":
-                    db.updateEmployeeRole();
-                    break;
-                case "Add a Department?":
-                    db.addDept();
-                    break;
-                case "Add a Role?":
-                    db.addRole();
-                    break;
-                case "Add an Employee?":
-                    db.addEmployee();
-                    break;
-            }
-        }
-        )
-            
+
+    switch (input.choice) {
+        case "View all departments?":
+            // newChoice = new getAllDept();
+            await db.getAllDept();
+            break;
+        case "View all roles?":
+            await db.getAllRoles();
+            break;
+        case "View all employees?":
+            await db.getAllEmployees();
+            break;
+        case "Update a role?":
+            await db.updateEmployeeRole();
+            break;
+        case "Add a Department?":
+            await db.addDept();
+            break;
+        case "Add a Role?":
+            await db.addRole();
+            break;
+        case "Add an Employee?":
+            await db.addEmployee();
+            break;
+    }
+    
+    userSearch();
+
+
 }
 userSearch();
 
-module.exports = {userSearch}
+// module.exports = {userSearch}

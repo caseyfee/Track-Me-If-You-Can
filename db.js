@@ -4,9 +4,7 @@ require('dotenv').config();
 require('console.table');
 const inquirer = require("inquirer");
 require('console.table');
-// const index = require("./index");
-// import { userSearch } from "./index";
-const userSearch = require('./index');
+
 
 
 // Connect to database
@@ -44,7 +42,6 @@ const queries = {
         } catch (err) {
             console.error(err)
         }
-        // userSearch();
     },
 
     getAllEmployees: async function () {
@@ -55,14 +52,13 @@ const queries = {
         } catch (err) {
             console.error(err)
         }
-        // userSearch();
     },
 
     // Function that will pull up employee list 
     async employeeList() {
-    const employeeQuery = `SELECT id AS value, name FROM department;`;
-    const employee = await db.query(employeeQuery);
-    return employee;
+        const employeeQuery = `SELECT id AS value, name FROM department;`;
+        const employee = await db.query(employeeQuery);
+        return employee;
     },
 
     updateEmployeeRole: async function () {
@@ -78,7 +74,7 @@ const queries = {
                     {
                         type: "input",
                         name: "uRoleid",
-                        message: "What is their new role's id?",                        
+                        message: "What is their new role's id?",
                     },
                     // {
                     //     type: "input",
@@ -108,88 +104,59 @@ const queries = {
     },
 
     addDept: async function () {
-         {
-            await inquirer.prompt(
+        try {
+            const input = await inquirer.prompt(
                 [
                     {
                         type: "input",
                         name: "aDeptName",
                         message: "What is the dept's name?",
-                    },
-                    // {
-                    //     type: "input",
-                    //     name: "aDeptName",
-                    //     message: "What is the dept's id?",
-                    // },
+                    }
                 ])
 
-                .then(await function(input){
-                    db.query ('INSERT INTO department SET ?',
-                    {
-                      name: input.aDeptName,
-                    //   id: "005"
-                    },
-                    function (err) { 
-                        if(err) throw err;
-                        // ${input.aDeptid}
-                        console.log(`added department id: ${input.aDeptName} `);
-                        // userSearch();
-                     }
-                    )
-                    });
+
+            await db.promise().query('INSERT INTO department (name) VALUES (?)',
+                input.aDeptName)
+            console.log("added department!")
+        } catch (err) {
+            console.error(err);
         }
-        // userSearch();
     },
     addRole: async function () {
         try {
-            await inquirer.prompt(
+            const answers = await inquirer.prompt(
                 [
                     {
                         type: "input",
-                        name: "aRoleName",
+                        name: "title",
                         message: "What is the role's name?",
                     },
                     {
                         type: "input",
-                        name: "aRoleSalary",
+                        name: "salary",
                         message: "What is the new role's salary?",
                     },
                     {
                         type: "input",
-                        name: "aRoleDept",
+                        name: "department_id",
                         message: "What is the new role's deptartment id?",
                     },
-                    // {
-                    //     type: "input",
-                    //     name: "aRoleManager",
-                    //     message: "What is the new role's manager id?",
-                    // },
                 ])
-                // const [input] = await db.promise().query("SELECT * FROM employees");
+            // const [input] = await db.promise().query("SELECT * FROM employees");
 
-                .then(await function (input) {
-                    db.promise().query(
-                        'INSERT INTO roles SET ?',
-                        {
-                            title: input.aRoleName,
-                            salary: input.aRoleSalary,
-                            department_id: input.aRoleDept,
-                            // manager_id: input.aRoleManager
-                        },
-                    )
-                })
+            await db.promise().query(
+                'INSERT INTO roles SET ?', answers
+            )
 
-            console.log(input);
-            return input
+            console.log("role added!");
         } catch (err) {
             console.error(err)
         }
-        // userSearch();
     },
 
     addEmployee: async function () {
         try {
-            await inquirer.prompt(
+            const answers = await inquirer.prompt(
                 [
                     {
                         type: "input",
@@ -206,32 +173,23 @@ const queries = {
                         name: "aEmployeeManagerid",
                         message: "What is the new employee's manager id?",
                     },
-                    // {
-                    //     type: "input",
-                    //     name: "aEmployeeRoleid",
-                    //     message: "What is the new employee's role id?",
-                    // },
-                ])
-            // THEN I am prompted to enter the employee’s first name, last name, 
-            // role, and manager, and that employee is added to the database
-            // const [input] = await db.promise().query("SELECT * FROM employees");
-            .then(await function (input) {
-                db.promise().query(
-                    'INSERT INTO employees SET ?',
-                    {
-                        first_name: input.aEmployeeFName,
-                        last_name: input.aEmployeeLName,
-                        // role_id: input.aEmployeeRole,
-                        manager_id: input.aEmployeeManager
-                    },
-                )
-            })
-            console.log(input);
+                    
+                // THEN I am prompted to enter the employee’s first name, last name, 
+                // role, and manager, and that employee is added to the database
+                // const [input] = await db.promise().query("SELECT * FROM employees");
+                   await db.promise().query(
+                        'INSERT INTO employees SET ?',
+                        {
+                            first_name: answers.aEmployeeFName,
+                            last_name: answers.aEmployeeLName,
+                        },
+                    )
+            
+            console.log(answers);
             return input
         } catch (err) {
             console.error(err)
         }
-        // userSearch();
     },
 }
 
