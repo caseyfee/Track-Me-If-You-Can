@@ -63,11 +63,11 @@ const queries = {
 
     updateEmployeeRole: async function () {
         try {
-            await inquirer.prompt(
+           const answers = await inquirer.prompt(
                 [
                     {
                         type: "list",
-                        name: "uRoleName",
+                        name: "name",
                         message: "Who needs a new role?",
                         choices: role.map(role => ({
                             name: role.name,
@@ -76,34 +76,18 @@ const queries = {
                     },
                     {
                         type: "input",
-                        name: "uRoleid",
+                        name: "role_id",
                         message: "What is their new role's id?",
                     },
-                    // {
-                    //     type: "input",
-                    //     name: "uRoleDept",
-                    //     message: "What is the department id?",
-                    // },
                 ])
-                // is promise().post a real thing? this needs to be updated 
-                // const [input] = await db.promise().post("UPDATE reviews SET review = ? WHERE id = ?");
-                // const params = [req.body.review, req.params.id];
-                // console.log(input);
-                // return input
-                .then(function (input) {
-                    db.promise().query(
-                        'INSERT INTO roles SET ?',
-                        {
-                            name: input.uRoleName,
-                            role_id: input.uRoleid,
-                            // department_id: input.uRoleDept
-                        },
+                
+                    await db.promise().query(
+                        'INSERT INTO roles SET ?', answers
                     )
-                })
+            
         } catch (err) {
             console.error(err)
         }
-        // userSearch();
     },
 
     addDept: async function () {
@@ -144,7 +128,6 @@ const queries = {
                         message: "What is the new role's deptartment id?",
                     },
                 ])
-            // const [input] = await db.promise().query("SELECT * FROM employees");
 
             await db.promise().query(
                 'INSERT INTO roles SET ?', answers
@@ -191,7 +174,5 @@ const queries = {
         }
     },
 }
-
-
 
 module.exports = queries
