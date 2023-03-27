@@ -162,13 +162,12 @@ const queries = {
                         name: "aRoleDept",
                         message: "What is the new role's deptartment id?",
                     },
-                    {
-                        type: "input",
-                        name: "aRoleManager",
-                        message: "What is the new role's manager id?",
-                    },
+                    // {
+                    //     type: "input",
+                    //     name: "aRoleManager",
+                    //     message: "What is the new role's manager id?",
+                    // },
                 ])
-                // is promise().post a real thing? this needs to be updated 
                 // const [input] = await db.promise().query("SELECT * FROM employees");
 
                 .then(await function (input) {
@@ -178,7 +177,7 @@ const queries = {
                             title: input.aRoleName,
                             salary: input.aRoleSalary,
                             department_id: input.aRoleDept,
-                            manager_id: input.aRoleManager
+                            // manager_id: input.aRoleManager
                         },
                     )
                 })
