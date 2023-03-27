@@ -15,7 +15,7 @@ const db = mysql.createConnection(
         user: process.env.DB_USERNAME,
         // MySQL password in other document
         password: process.env.DB_PASSWORD,
-        database: process.env.DB
+        database: process.env.DB,
     },
     console.log(`Connected to the ArtHouse_db database.`)
 );
@@ -23,7 +23,7 @@ const db = mysql.createConnection(
 // Function that will pull up employee list to add to it for the 
 const employeeList = async () => {
     const departmentQuery = `SELECT id AS value, name FROM department;`;
-    const departments = await connection.query(departmentQuery);
+    const departments = await db.query(departmentQuery);
     return departments[0];
 };
 
