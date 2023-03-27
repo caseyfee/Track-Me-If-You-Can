@@ -192,7 +192,7 @@ const queries = {
 
     addEmployee: async function () {
         try {
-            inquirer.prompt(
+            await inquirer.prompt(
                 [
                     {
                         type: "list",
@@ -217,13 +217,24 @@ const queries = {
                 ])
             // THEN I am prompted to enter the employee’s first name, last name, 
             // role, and manager, and that employee is added to the database
-            const [input] = await db.promise().query("SELECT * FROM employees");
+            // const [input] = await db.promise().query("SELECT * FROM employees");
+            .then(await function (input) {
+                db.promise().query(
+                    'INSERT INTO employees SET ?',
+                    {
+                        first_name: input.aEmployeeFName,
+                        last_name: input.aEmployeeLName,
+                        role_id: input.aEmployeeRole,
+                        manager_id: input.aEmployeeManager
+                    },
+                )
+            })
             console.log(input);
             return input
         } catch (err) {
             console.error(err)
         }
-        userSearch();
+        // userSearch();
     },
 }
 
