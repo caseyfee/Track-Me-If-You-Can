@@ -4,6 +4,7 @@ require('dotenv').config();
 require('console.table');
 const inquirer = require("inquirer");
 require('console.table');
+const index = require("./index");
 
 
 // Connect to database
@@ -19,6 +20,12 @@ const db = mysql.createConnection(
     console.log(`Connected to the ArtHouse_db database.`)
 );
 
+// Function that will pull up employee list to add to it for the 
+const employeeList = async () => {
+    const departmentQuery = `SELECT id AS value, name FROM department;`;
+    const departments = await connection.query(departmentQuery);
+    return departments[0];
+};
 
 const queries = {
     getAllDept: async function () {
@@ -29,6 +36,7 @@ const queries = {
         } catch (err) {
             console.error(err)
         }
+        userSearch();
     },
 
     getAllRoles: async function () {
@@ -39,6 +47,7 @@ const queries = {
         } catch (err) {
             console.error(err)
         }
+        userSearch();
     },
 
     getAllEmployees: async function () {
@@ -49,6 +58,7 @@ const queries = {
         } catch (err) {
             console.error(err)
         }
+        userSearch();
     },
 
     updateRole: function () {
@@ -89,6 +99,7 @@ const queries = {
         } catch (err) {
             console.error(err)
         }
+        userSearch();
     },
 
     addDept: async function () {
@@ -101,26 +112,29 @@ const queries = {
                         message: "What is the dept's name?",
                     },
                 ])
-            // is promise().post a real thing? this needs to be updated 
-            const [input] = await db.promise().query("INSERT INTO departments (dept_name) VALUES (?)");
+
+                const [input] = await db.promise().query("INSERT INTO departments (name) VALUES (?)");
             
             const params = [body.aDeptName];
 
-            db.query(sql, params, (err, result) => {
-                if (err) {
-                    res.status(400).json({ error: err.message });
-                    return;
-                }
-                res.json({
-                    message: 'success',
-                    data: body
-                });
-            });
+            // POTENTIAL OTHER WAY OF DOING THE SAME THING
+            // db.query(sql, params, (err, result) => {
+            //     if (err) {
+            //         res.status(400).json({ error: err.message });
+            //         return;
+            //     }
+            //     res.json({
+            //         message: 'success',
+            //         data: body
+            //     });
+            // });
+
             console.log(input);
             return input
         } catch (err) {
             console.error(err)
         }
+        userSearch();
     },
     addRole: function () {
         try {
@@ -157,7 +171,7 @@ const queries = {
             
             .then(function (input) {
                 dbConnection.query(
-                  'INSERT INTO roles SET ?',
+                  'INSERT INTO roles SET (?)',
                   {
                     title: input.aRoleName,
                     salary: input.aRoleName,
@@ -172,9 +186,9 @@ const queries = {
         } catch (err) {
             console.error(err)
         }
+        userSearch();
     },
 
-    // Needs updating!
     updateEmployee: async function () {
         try {
             inquirer.prompt(
@@ -183,7 +197,10 @@ const queries = {
                         type:"list",
                         name: "uEmployeeName",
                         message: "What is the employee's first name?",
-                        list: ["1", "2", "3"]
+                        list: await employeeList(),
+                            when(answers) {
+                                return answers.task === "What is the employee's first name?";
+                            }
                     },
                     {
                         type:"input",
@@ -191,22 +208,16 @@ const queries = {
                         message: "What is this individual's new role?",
                     },
                 ])
-            // is promise().post a real thing? this needs to be updated 
             const [input] = await db.promise().query("SELECT * FROM employees");
             console.log(input);
             return input
         } catch (err) {
             console.error(err)
         }
+        userSearch();
     },
 }
 
 
 
 module.exports = queries
-// module.exports = {
-//     getAllDept,
-//     getAllRoles,
-//     getAllEmployees,
-//     updateRole,
-// }

@@ -21,8 +21,6 @@ async function userSearch(){
                 'Add a Department?', 
                 'Add a Role?', 
                 'Add an Employee?',
-
-                
                 ],
             },
         ]
@@ -35,31 +33,24 @@ async function userSearch(){
                 case "View all departments?":
                     // newChoice = new getAllDept();
                     db.getAllDept();
-                    userSearch();
                     break;
                 case "View all roles?":
                     db.getAllRoles();
-                    userSearch();
                     break;
                 case "View all employees?":
                     db.getAllEmployees();
-                    userSearch();
                     break;
                 case "Update a role?":
                     db.updateRole();
-                    userSearch();
                     break;
                 case "Add a Department?":
                     db.addDept();
-                    userSearch();
                     break;
                 case "Add a Role?":
                     db.addRole();
-                    userSearch();
                     break;
                 case "Add an Employee?":
                     db.updateEmployee();
-                    userSearch();
                     break;
             }
         }
@@ -67,3 +58,5 @@ async function userSearch(){
             
 }
 userSearch();
+
+module.exports = userSearch
