@@ -16,9 +16,9 @@ async function userSearch() {
                     'View all departments?',
                     'View all roles?',
                     'View all employees?',
-                    'Update a role?',
+                    'Update an employee\'s role?',
                     'Add a Department?',
-                    'Add a Role?',
+                    'Add a Role',
                     'Add an Employee?',
                 ],
             },
@@ -28,7 +28,6 @@ async function userSearch() {
 
     switch (input.choice) {
         case "View all departments?":
-            // newChoice = new getAllDept();
             await db.getAllDept();
             break;
         case "View all roles?":
@@ -57,4 +56,3 @@ async function userSearch() {
 }
 userSearch();
 
-// module.exports = {userSearch}
