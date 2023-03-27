@@ -31,7 +31,6 @@ const queries = {
         } catch (err) {
             console.error(err)
         }
-        // userSearch();
     },
 
     getAllRoles: async function () {
@@ -54,13 +53,6 @@ const queries = {
         }
     },
 
-    // Function that will pull up employee list 
-    async employeeList() {
-        const employeeQuery = `SELECT id AS value, name FROM department;`;
-        const employee = await db.query(employeeQuery);
-        return employee;
-    },
-
     updateEmployeeRole: async function () {
         try {
 
@@ -73,7 +65,6 @@ const queries = {
             }))
 
             // Query all the roles 
-
             const currentRoles = await db.promise().query("SELECT * FROM roles");
 
             let rolesArr = input[0].map(roles => ({
@@ -88,13 +79,6 @@ const queries = {
                         name: "first_name",
                         message: "Who needs a new role?",
                         choices: mappedArr
-                        
-                       
-                        // choices: this.getAllEmployees()
-                        // choices: employees.map(employee => ({
-                        // name: employee.first_name,
-                        // id: employee.id
-                        // }))
                     },
                     {
                         type: "list",
@@ -103,7 +87,7 @@ const queries = {
                         choices: rolesArr
                     },
                 ])
-            
+
 
             await db.promise().query(
                 'INSERT INTO employees SET ?', answers
