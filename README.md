@@ -16,3 +16,5 @@ Big thanks to the TA's, BCS, my tutor, and the mini-project for this week's succ
 
 ## Video:
 https://drive.google.com/file/d/1Nw6AWd1TLKYtMCdjMuDmG6h3TmDxTxlE/view
+
+Thanks for watching!
