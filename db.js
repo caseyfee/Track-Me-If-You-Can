@@ -69,9 +69,9 @@ const queries = {
                         type: "list",
                         name: "name",
                         message: "Who needs a new role?",
-                        choices: role.map(role => ({
-                            name: role.name,
-                            value: role.id
+                        choices: roles.map(roles => ({
+                            name: roles.name,
+                            value: roles.id
                         }))
                     },
                     {
@@ -145,27 +145,23 @@ const queries = {
                 [
                     {
                         type: "input",
-                        name: "aEmployeeFName",
+                        name: "first_name",
                         message: "What is the employee's first name?",
                     },
                     {
                         type: "input",
-                        name: "aEmployeeLName",
+                        name: "last_name",
                         message: "What is the employee's last name?",
                     },
                     {
                         type: "input",
-                        name: "aEmployeeManagerid",
+                        name: "manager_id",
                         message: "What is the new employee's manager id?",
                     },
                 ])
                 
                    await db.promise().query(
-                        'INSERT INTO employees (first_name, last_name) VALUES (?)',
-                        {
-                            first_name: answers.aEmployeeFName,
-                            last_name: answers.aEmployeeLName,
-                        },
+                        'INSERT INTO employees (first_name, last_name, manager_id) VALUES (?)', answers
                     )
             
             console.log("added employee");
