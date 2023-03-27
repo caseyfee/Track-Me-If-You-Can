@@ -63,29 +63,52 @@ const queries = {
 
     updateEmployeeRole: async function () {
         try {
-           const answers = await inquirer.prompt(
+
+            // Pulls all the first names
+            const input = await db.promise().query("SELECT * FROM employees");
+
+            let mappedArr = input[0].map(employees => ({
+                name: employees.first_name,
+                value: employees.id
+            }))
+
+            // Query all the roles 
+
+            const currentRoles = await db.promise().query("SELECT * FROM roles");
+
+            let rolesArr = input[0].map(roles => ({
+                name: roles.title,
+                value: roles.id
+            }))
+
+            const answers = await inquirer.prompt(
                 [
                     {
                         type: "list",
-                        name: "name",
+                        name: "first_name",
                         message: "Who needs a new role?",
-                        choices: this.getAllEmployees()
+                        choices: mappedArr
+                        
+                       
+                        // choices: this.getAllEmployees()
                         // choices: employees.map(employee => ({
-                        //     name: employee.name,
-                        //     value: employee.id
+                        // name: employee.first_name,
+                        // id: employee.id
                         // }))
                     },
                     {
-                        type: "input",
+                        type: "list",
                         name: "role_id",
                         message: "What is their new role's id?",
+                        choices: rolesArr
                     },
                 ])
-                
-                    await db.promise().query(
-                        'INSERT INTO roles SET ?', answers
-                    )
             
+
+            await db.promise().query(
+                'INSERT INTO employees SET ?', answers
+            )
+
         } catch (err) {
             console.error(err)
         }
@@ -101,7 +124,7 @@ const queries = {
                         message: "What is the dept's name?",
                     }
                 ])
-                
+
             await db.promise().query('INSERT INTO department (name) VALUES (?)',
                 input.aDeptName)
             console.log("added department!")
@@ -165,12 +188,12 @@ const queries = {
                         message: "What is the new employee's manager id?",
                     },
                 ])
-                // (first_name, last_name, role_id, manager_id) VALUES
-                
-                   await db.promise().query(
-                        'INSERT INTO employees SET ?', answers
-                    )
-            
+            // (first_name, last_name, role_id, manager_id) VALUES
+
+            await db.promise().query(
+                'INSERT INTO employees SET ?', answers
+            )
+
             console.log("added employee");
         } catch (err) {
             console.error(err)
