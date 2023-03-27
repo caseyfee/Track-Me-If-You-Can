@@ -37,7 +37,7 @@ async function userSearch() {
         case "View all employees?":
             await db.getAllEmployees();
             break;
-        case "Update a role?":
+        case "Update an employee's role?":
             await db.updateEmployeeRole();
             break;
         case "Add a Department?":

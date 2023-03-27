@@ -69,7 +69,10 @@ const queries = {
                         type: "list",
                         name: "uRoleName",
                         message: "Who needs a new role?",
-                        choices: this.getAllEmployees(),
+                        choices: role.map(role => ({
+                            name: role.name,
+                            value: role.id
+                        }))
                     },
                     {
                         type: "input",
@@ -113,8 +116,7 @@ const queries = {
                         message: "What is the dept's name?",
                     }
                 ])
-
-
+                
             await db.promise().query('INSERT INTO department (name) VALUES (?)',
                 input.aDeptName)
             console.log("added department!")
@@ -176,7 +178,7 @@ const queries = {
                 ])
                 
                    await db.promise().query(
-                        'INSERT INTO employees SET ?',
+                        'INSERT INTO employees (first_name, last_name) VALUES (?)',
                         {
                             first_name: answers.aEmployeeFName,
                             last_name: answers.aEmployeeLName,
