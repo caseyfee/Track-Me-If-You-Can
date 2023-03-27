@@ -50,7 +50,7 @@ async function userSearch(){
                     db.addRole();
                     break;
                 case "Add an Employee?":
-                    db.updateEmployee();
+                    db.addEmployee();
                     break;
             }
         }

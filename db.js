@@ -66,9 +66,13 @@ const queries = {
             inquirer.prompt(
                 [
                     {
-                        type:"input",
+                        type:"list",
                         name: "uRoleName",
                         message: "What is the role's name?",
+                        list: employeeList(),
+                            when(answers) {
+                                return answers.task === "What is the employee's first name?";
+                            }
                     },
                     {
                         type:"input",
@@ -117,18 +121,6 @@ const queries = {
             
             const params = [body.aDeptName];
 
-            // POTENTIAL OTHER WAY OF DOING THE SAME THING
-            // db.query(sql, params, (err, result) => {
-            //     if (err) {
-            //         res.status(400).json({ error: err.message });
-            //         return;
-            //     }
-            //     res.json({
-            //         message: 'success',
-            //         data: body
-            //     });
-            // });
-
             console.log(input);
             return input
         } catch (err) {
@@ -143,7 +135,7 @@ const queries = {
                     {
                         type:"input",
                         name: "aRoleName",
-                        message: "What is the role's name (first and last)?",
+                        message: "What is the role's name?",
                     },
                     {
                         type:"input",
@@ -153,17 +145,7 @@ const queries = {
                     {
                         type:"input",
                         name: "aRoleDept",
-                        message: "What is the new role's deptartment?",
-                    },
-                    {
-                        type:"input",
-                        name: "aRoleManager",
-                        message: "Who is the role's manager?",
-                    },
-                    {
-                        type:"input",
-                        name: "aRoleManager",
-                        message: "Who is the role's manager?",
+                        message: "What is the new role's deptartment id?",
                     },
                 ])
             // is promise().post a real thing? this needs to be updated 
@@ -189,25 +171,33 @@ const queries = {
         userSearch();
     },
 
-    updateEmployee: async function () {
+    addEmployee: async function () {
         try {
             inquirer.prompt(
                 [
                     {
                         type:"list",
-                        name: "uEmployeeName",
+                        name: "aEmployeeFName",
                         message: "What is the employee's first name?",
-                        list: await employeeList(),
-                            when(answers) {
-                                return answers.task === "What is the employee's first name?";
-                            }
+                    },
+                    {
+                        type:"list",
+                        name: "aEmployeeLName",
+                        message: "What is the employee's last name?",
                     },
                     {
                         type:"input",
-                        name: "uEmployeeRole",
+                        name: "aEmployeeRole",
                         message: "What is this individual's new role?",
                     },
+                    {
+                        type:"input",
+                        name: "aEmployeeManager",
+                        message: "What is this individual's manager's id?",
+                    },
                 ])
+                // THEN I am prompted to enter the employee’s first name, last name, 
+                // role, and manager, and that employee is added to the database
             const [input] = await db.promise().query("SELECT * FROM employees");
             console.log(input);
             return input
