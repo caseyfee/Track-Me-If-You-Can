@@ -69,9 +69,9 @@ const queries = {
                         type: "list",
                         name: "name",
                         message: "Who needs a new role?",
-                        choices: roles.map(roles => ({
-                            name: roles.name,
-                            value: roles.id
+                        choices: employees.map(employees => ({
+                            name: employees.name,
+                            value: employees.id
                         }))
                     },
                     {
