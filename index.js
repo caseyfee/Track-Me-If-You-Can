@@ -18,7 +18,7 @@ async function userSearch() {
                     'View all employees?',
                     'Update an employee\'s role?',
                     'Add a Department?',
-                    'Add a Role',
+                    'Add a Role?',
                     'Add an Employee?',
                 ],
             },
